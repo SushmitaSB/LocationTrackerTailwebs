@@ -1,29 +1,25 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.adapter.TrackDetailsAdapter;
+import com.example.locationtrackertailwebs.model.TrackDetails;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -59,7 +55,9 @@ public class TrackingHistory extends AppCompatActivity {
     }
 
     public void fetchData(){
-        firestore.collection("trackdetails").get()
+        String userEmail = firebaseAuth.getCurrentUser().getEmail();
+        CollectionReference collectionReference = firestore.collection("trackdetails");
+        collectionReference.whereEqualTo("userEmail",userEmail).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

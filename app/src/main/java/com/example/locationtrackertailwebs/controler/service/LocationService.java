@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.controler.service;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
@@ -17,11 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.Constants;
+import com.example.locationtrackertailwebs.view.TrackingPage;
+import com.example.locationtrackertailwebs.model.EventBusPojo;
+import com.example.locationtrackertailwebs.model.TrackDetails;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,18 +33,20 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UnknownFormatConversionException;
-
-import static com.example.locationtrackertailwebs.TrackingPage.latList;
-import static com.example.locationtrackertailwebs.TrackingPage.longList;
 
 public class LocationService extends Service {
     private ArrayList<Double> latitudeList = new ArrayList<>();
     private ArrayList<Double> longitudeList = new ArrayList<>();
     FirebaseAuth firebaseAuth;
+    Double latitudeEvent, longitudeEvent;
     FirebaseFirestore firestore;
+    ArrayList<Double> latlistEvent = new ArrayList<>();
+    ArrayList<Double> longlistEvent = new ArrayList<>();
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -52,6 +58,12 @@ public class LocationService extends Service {
                 latitudeList.add(latitude);
                 longitudeList.add(longitude);
                 Log.d("LOCATION_UPDATE", latitude + ", " + longitude);
+//                latlistEvent.add(latitude);
+//                longlistEvent.add(latitude);
+                latitudeEvent = latitude;
+                longitudeEvent = longitude;
+                EventBusPojo eventBusPojo = new EventBusPojo(latitudeEvent, longitudeEvent);
+                EventBus.getDefault().post(eventBusPojo);
             }
         }
     };
@@ -98,7 +110,7 @@ public class LocationService extends Service {
 
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(8000);
+        locationRequest.setFastestInterval(10000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationServices.getFusedLocationProviderClient(this)
@@ -109,10 +121,11 @@ public class LocationService extends Service {
     private void stopLocationService(){
         if(latitudeList.size() !=0 && longitudeList.size() !=0){
             firebaseAuth = FirebaseAuth.getInstance();
+            String userEmail = firebaseAuth.getCurrentUser().getEmail();
             firestore = FirebaseFirestore.getInstance();
             CollectionReference dbReference = firestore.collection("trackdetails");
             long id = new java.util.Date().getTime();
-            TrackDetails trackDetails = new TrackDetails(id, TrackingPage.total_time_track, latitudeList, longitudeList, new Date());
+            TrackDetails trackDetails = new TrackDetails(id, TrackingPage.total_time_track, latitudeList, longitudeList, new Date(),userEmail);
             dbReference.add(trackDetails)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override

@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -9,9 +9,10 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.locationtrackertailwebs.DirectionHelper.SliderAdapter;
+import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.adapter.SliderAdapter;
+import com.example.locationtrackertailwebs.controler.ZoomOutPageTransformer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

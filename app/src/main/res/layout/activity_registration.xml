@@ -5,9 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/blue_light_shade"
-    tools:context=".RegistrationActivity">
+    android:background="@drawable/layout_background"
+    tools:context=".view.RegistrationActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="60sp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_clear_24"
+            android:id="@+id/clear"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:text="REGISTER"/>
+    </androidx.appcompat.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,39 +36,33 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/univ_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_marginTop="40sp"
-            android:layout_marginBottom="54dp"
-            android:layout_gravity="center_horizontal" />
 
         <!-- Name Label -->
 
         <EditText android:id="@+id/firstNameET"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:inputType="text"
             android:layout_margin="5sp"
             android:gravity="center"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/edittextshape"
             android:hint="First Name"/>
 
         <EditText android:id="@+id/lastNameET"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:inputType="text"
             android:layout_margin="5sp"
             android:gravity="center"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/edittextshape"
             android:hint="Second Name"/>
 
         <!-- Email Label -->
 
         <EditText android:id="@+id/emailid"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:background="@drawable/edit_text_shape"
+            android:layout_height="50sp"
+            android:background="@drawable/edittextshape"
             android:inputType="textEmailAddress"
             android:layout_margin="5sp"
             android:gravity="center"
@@ -59,47 +73,53 @@
 
         <EditText android:id="@+id/passId"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:inputType="textPassword"
             android:layout_margin="5sp"
             android:gravity="center"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/edittextshape"
             android:hint="Password"/>
 
         <!-- Confirm Password Label -->
 
         <EditText android:id="@+id/conPassId"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:inputType="textPassword"
             android:layout_margin="5sp"
             android:gravity="center"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/edittextshape"
             android:hint="Confirm Password"/>
 
         <Button
             android:id="@+id/btId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60sp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/blue"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:background="@drawable/button_background"
+            android:background="@drawable/buttonshap"
             android:text= "@string/signIn"/>
 
-        <TextView android:id="@+id/loginId"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:textColor="@color/light_blue"
-            android:text= "@string/already_have_an_account"
-            android:gravity="center"
-            android:textSize="16dip"/>
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+        <TextView
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="30sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="By continuing, you accecpt our privacy policy and terms of use. "
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 
 </LinearLayout>

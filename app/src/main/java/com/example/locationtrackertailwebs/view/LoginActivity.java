@@ -1,20 +1,16 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.view;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.Validation;
 import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
@@ -29,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login)
     Button button;
     @BindView(R.id.link_signup)
-    TextView textView;
+    LinearLayout linearLayout;
     private String email, password;
     private Validation validation;
     FirebaseAuth firebaseAuth;
@@ -40,6 +36,13 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,18 +51,9 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuth = FirebaseAuth.getInstance();
                 Validation validation = new Validation(LoginActivity.this);
                 validation.setLoginValidation(email,password,firebaseAuth,emailEt,passEt);
-//                firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()){
-//                            Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                            startActivity(intent);
-//                        }else {
-//                            Toast.makeText(LoginActivity.this, "Error ! "+ task.getException(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
+//                if (Validation.log_status){
+//                    finish();
+//                }
             }
         });
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:weightSum="2"
     android:orientation="vertical"
-    tools:context=".IntroActivity">
+    tools:context=".view.IntroActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout1"

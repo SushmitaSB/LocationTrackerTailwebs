@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
@@ -43,6 +44,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.github.jd-alexander:library:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.2.0'
     //butterknife
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     //recyclerview

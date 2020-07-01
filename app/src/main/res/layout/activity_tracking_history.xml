@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TrackingHistory">
+    tools:context=".view.TrackingHistory">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_clear_24"
+            android:src="@drawable/ic_black_clear"
             android:id="@+id/clearId"/>
         <TextView
             android:layout_width="match_parent"
@@ -25,9 +25,17 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
     </androidx.appcompat.widget.Toolbar>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/grey"
+    android:layout_marginBottom="20sp">
+
+</View>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerId"/>
+
 </LinearLayout>

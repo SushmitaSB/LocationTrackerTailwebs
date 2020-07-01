@@ -1,10 +1,13 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 
 public class SplashActivity extends AppCompatActivity {
 

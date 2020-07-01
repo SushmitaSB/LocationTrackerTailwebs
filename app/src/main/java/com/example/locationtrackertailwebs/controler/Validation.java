@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.controler;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.locationtrackertailwebs.view.LoginActivity;
+import com.example.locationtrackertailwebs.view.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,10 +23,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.locationtrackertailwebs.RegistrationActivity.TAG;
+import static com.example.locationtrackertailwebs.view.RegistrationActivity.TAG;
 
 
 public class Validation {
+    public static boolean reg_status = false;
+    public static boolean log_status = false;
     private Context context;
     private SharedPreferenceConfig sharedPreferenceConfig;
     private String userId;
@@ -61,6 +65,7 @@ public class Validation {
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "successfully user profile is created for uid-  " +
                                                             userId);
+                                                    reg_status = true;
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
@@ -122,6 +127,11 @@ public void setLoginValidation( final String email, String pass,final FirebaseAu
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(context, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                        String userEmail = firebaseAuth.getCurrentUser().getEmail();
+                        sharedPreferenceConfig = new SharedPreferenceConfig(context);
+                        sharedPreferenceConfig.LoginStatus(true);
+                        sharedPreferenceConfig.LoginUser(userEmail);
+                        log_status = true;
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                     }else {

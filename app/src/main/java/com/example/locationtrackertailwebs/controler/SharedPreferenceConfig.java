@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.controler;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,15 +23,15 @@ public class SharedPreferenceConfig {
         return status;
     }
 
-    public void LoginUser(int id){
+    public void LoginUser(String email){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("login_user", id);
+        editor.putString("login_user", email);
         editor.commit();
     }
 
-    public int read_login_user(){
-        int user = 0;
-        user = sharedPreferences.getInt("login_user",0);
+    public String read_login_user(){
+        String user = "";
+        user = sharedPreferences.getString("login_user","");
         return user;
     }
 

@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs.DirectionHelper;
+package com.example.locationtrackertailwebs.controler.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import com.example.locationtrackertailwebs.R;
-import com.example.locationtrackertailwebs.SetColor;
+import com.example.locationtrackertailwebs.controler.SetColor;
 
 public class SliderAdapter extends PagerAdapter {
     private Context context;

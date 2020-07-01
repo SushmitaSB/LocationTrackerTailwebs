@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.controler.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.example.locationtrackertailwebs.view.MapActivity;
+import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.model.TrackDetails;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.locationtrackertailwebs;
+package com.example.locationtrackertailwebs.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,15 +10,27 @@ public class TrackDetails {
     private ArrayList<Double> longList;
     private Date date;
 
+    private String userEmail;
+
     public TrackDetails(){
 
     }
-    public TrackDetails(long id, String totalTime, ArrayList<Double> latList, ArrayList<Double> longList, Date date) {
+    public TrackDetails(long id, String totalTime, ArrayList<Double> latList, ArrayList<Double> longList, Date date,String userEmail) {
         this.id = id;
         this.totalTime = totalTime;
         this.latList = latList;
         this.longList = longList;
         this.date = date;
+        this.userEmail = userEmail;
+    }
+
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public long getId() {

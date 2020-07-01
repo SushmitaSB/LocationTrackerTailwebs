@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TrackingPage"></activity>
-        <activity android:name=".TrackingHistory" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".IntroActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".view.TrackingPage"></activity>
+        <activity android:name=".view.TrackingHistory" />
+        <activity android:name=".view.RegistrationActivity" />
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.IntroActivity" />
+        <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".view.MapActivity" />
+        <activity android:name=".view.MainActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -32,7 +32,7 @@
             android:value="AIzaSyD3ueR_FlIVZrVbdRj6C8PO9PpX9vvCkJs" />
 
         <service
-            android:name=".LocationService"
+            android:name=".controler.service.LocationService"
             android:enabled="true"
             android:exported="false" />
     </application>
