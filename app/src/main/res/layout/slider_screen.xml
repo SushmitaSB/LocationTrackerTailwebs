@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="0sp"
+         android:layout_weight="0.98">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:id="@+id/backgroundLayout"
+        android:src="@drawable/women"/>
+
+    <ImageView
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:src="@drawable/univ_logo" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/backgroundLayout"
+        android:layout_marginTop="-112dp">
+        <TextView
+            android:id="@+id/tvHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/backgroundLayout"
+            android:fontFamily="sans-serif"
+            android:text="gggggg"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp"
+            android:textColor="@color/blue"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp"
+            android:layout_below="@id/tvHeading"
+            android:text="kkkkk"
+            android:fontFamily="sans-serif"
+            android:id="@+id/tvText"
+            android:textColor="@color/blue"/>
+
+    </LinearLayout>
+
+     </RelativeLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="0.02"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_below="@id/backgroundLayout"
+            android:layout_marginTop="15sp">
+
+            <Space
+                android:layout_width="20sp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/ind1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/active_dot_layout" />
+
+            <Space
+                android:layout_width="10sp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/ind2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/non_active_dot_xml" />
+            <Space
+                android:layout_width="10sp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/ind3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/non_active_dot_xml" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

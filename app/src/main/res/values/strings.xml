@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LocationTrackerTailwebs</string>
+    <string name="google_maps_key">map_key</string>
+    <string name="world_of_opportunity">A world of Opportunity</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login">Log In</string>
+    <string name="signIn">SignIn</string>
+    <string name="be_part">Be part of our opportunity</string>
+    <string name="our_world">Our world never stops moving.</string>
+    <string name="perfect_your">Perfect your application</string>
+    <string name="everything">Everything you need to know about applying.</string>
+    <string name="postgraduate">Postgratuate applications open</string>
+    <string name="join">Join our world.</string>
+    <string name="get_started">Get Started</string>
+    <string name="make_your_university">Make your university life the best it can be,\nin a world of opportunity. </string>
+</resources>

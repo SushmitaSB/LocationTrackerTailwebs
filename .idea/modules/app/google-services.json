@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "2670858113",
+    "firebase_url": "https://locationtracking-dda1a.firebaseio.com",
+    "project_id": "locationtracking-dda1a",
+    "storage_bucket": "locationtracking-dda1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2670858113:android:727aee4827ab9f65642280",
+        "android_client_info": {
+          "package_name": "com.example.locationtrackertailwebs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "2670858113-ldg2j1t5k5fluc50o50eudhq7v6m3lip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.locationtrackertailwebs",
+            "certificate_hash": "a897bea76a3a4e89702cac42ce80163dc2f055e6"
+          }
+        },
+        {
+          "client_id": "2670858113-iokfkenvqkaam0j1nrl7vn42pcsh5t0i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHrTX9ZG42kIylGf1X9KYIVNA8w763Df8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2670858113-iokfkenvqkaam0j1nrl7vn42pcsh5t0i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:weightSum="2"
+        android:id="@+id/linearLayoutClick"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:id="@+id/trackedTimeTvId"/>
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:id="@+id/datetvId"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgId"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:layout_weight="0.3"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"/>
+
+</LinearLayout>
