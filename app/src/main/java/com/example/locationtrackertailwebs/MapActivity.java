@@ -15,7 +15,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -32,16 +34,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Bundle bundle;
 
     private Polyline currentPolyline;
-    private static  LatLng p1 = new LatLng(27.658143, 85.3199503);
-    private static  LatLng p2 = new LatLng(27.667491, 85.3208583);
-    private static  LatLng p3 = new LatLng(27.667591, 85.3608583);
-    private static  LatLng p4 = new LatLng(27.667791, 85.3708583);
-    private static LatLng p5 = new LatLng(27.668991, 85.3808583);
-    private static  LatLng p6 = new LatLng(27.699491, 85.3908583);
-    private static  LatLng p7 = new LatLng(27.867491, 85.4108583);
+    //Dummy data
+//    private static  LatLng p1 = new LatLng(27.658143, 85.3199503);
+//    private static  LatLng p2 = new LatLng(27.667491, 85.3208583);
+//    private static  LatLng p3 = new LatLng(27.667591, 85.3608583);
+//    private static  LatLng p4 = new LatLng(27.667791, 85.3708583);
+//    private static LatLng p5 = new LatLng(27.668991, 85.3808583);
+//    private static  LatLng p6 = new LatLng(27.699491, 85.3908583);
+//    private static  LatLng p7 = new LatLng(27.867491, 85.4108583);
     ArrayList<Double> latList;
     ArrayList<Double> longList;
     ArrayList<LatLng> latLngArrayList;
+    ArrayList<Marker> markerOptionsArrayList;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         latList = new ArrayList<>();
         longList = new ArrayList<>();
         latLngArrayList = new ArrayList<>();
+        markerOptionsArrayList = new ArrayList<>();
         i = getIntent();
         bundle=i.getExtras();
         if (bundle != null){
@@ -60,13 +65,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             LatLng latLng = new LatLng(latList.get(i), longList.get(i));
             latLngArrayList.add(latLng);
         }
-
-        place1 = new MarkerOptions().position(new LatLng(27.658143, 85.3199503)).title("Location 1");
-        place2 = new MarkerOptions().position(new LatLng(27.867491, 85.4108583)).title("Location 2");
+        int index = latList.size()-1;
+        //place1 = new MarkerOptions().position(new LatLng(latList.get(0), longList.get(0))).title("Location 1");
+       // place2 = new MarkerOptions().position(new LatLng(latList.get(index), longList.get(index))).title("Location 2");
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapNearBy);
         mapFragment.getMapAsync(MapActivity.this);
-        new FetchURL(MapActivity.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
+       // new FetchURL(MapActivity.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
     }
 
     @Override
@@ -74,40 +79,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap = googleMap;
         Log.d("mylog", "Added Markers");
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(85.4108583,
-                        85.4108583), DEFAULT_ZOOM));
-        mMap.addMarker(place1);
-        mMap.addMarker(place2);
+                new LatLng(latList.get(0),
+                        longList.get(0)), DEFAULT_ZOOM));
+//        mMap.addMarker(place1);
+//        mMap.addMarker(place2);
         mMap.addPolyline((new PolylineOptions())
-                .add(p1,p2,p3,p4,p5)
-                .width(5).color(Color.BLUE)
+                .addAll(latLngArrayList)
+                .width(10).color(Color.BLUE)
                 .geodesic(true));
 
-//        Polyline line;
-//        for (int i = 0; i < latLngArrayList.size()-1; i++) {
-//            place1 = new MarkerOptions().position(new LatLng(latList.get(i), longList.get(i))).title("location "+ i+1);
-//           // mMap.addMarker(place1);
-//            // mMap is the Map Object
-//            LatLng src = latLngArrayList.get(i);
-//          LatLng dest = latLngArrayList.get(i + 1);
-//            line = mMap.addPolyline(
-//                    new PolylineOptions().add(
-//                            new LatLng(src.latitude, src.longitude), new LatLng(dest.latitude, dest.longitude))
-//                            .width(5).color(Color.BLUE).geodesic(true)
-//            );
-//        }
+        for(int i = 0 ; i < latList.size() ; i++) {
 
-//        for (int z = 0; z < list.size() - 1; z++) {
-//            LatLng src = list.get(z);
-//            LatLng dest = list.get(z + 1);
-//            line = myMap.addPolyline(new PolylineOptions()
-//                    .add(new LatLng(src.latitude, src.longitude),
-//                            new LatLng(dest.latitude, dest.longitude))
-//                    .width(5).color(Color.BLUE).geodesic(true));
-//        }
-//
+            createMarker(latList.get(i),longList.get(i), "Location: "+ i+1);
+        }
 
 
+
+
+    }
+
+    protected Marker createMarker(double latitude, double longitude, String title) {
+
+        return mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .anchor(0.5f, 0.5f)
+                .title(title));
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
