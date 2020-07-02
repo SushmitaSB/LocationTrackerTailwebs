@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/layout_background"
+    tools:context=".view.DashboardActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:id="@+id/toolbarDashBoardId">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_clear_24"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_weight="1.2"
+                    android:layout_height="match_parent"
+                    android:text="DashBoard"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="20sp"
+                    android:textSize="20sp"
+                    android:gravity="end|center_vertical"/>
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_weight="0.8"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/logoutId"
+                    android:textStyle="bold"
+                    android:gravity="end|center_vertical"
+                    android:text="Logout"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_marginRight="30sp"
+                android:layout_marginLeft="30sp"
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:textSize="16sp"
+                android:text="Student Details"
+                android:gravity="center"
+                android:background="@drawable/incoming"
+                android:textColor="@color/colorPink"
+                android:id="@+id/studenFormId"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_marginRight="30sp"
+                android:layout_marginLeft="30sp"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="80sp"
+                android:textColor="@color/colorPink"
+                android:textSize="16sp"
+                android:text="Track your location"
+                android:background="@drawable/outgoing"
+                android:id="@+id/trackingId"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_marginRight="30sp"
+                android:layout_marginLeft="30sp"
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:textColor="@color/colorPink"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="ChatBot"
+                android:background="@drawable/incoming"
+                android:id="@+id/chatbotId"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="0.9">
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 import com.example.locationtrackertailwebs.controler.Validation;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     private String email, password;
     private Validation validation;
+    SharedPreferenceConfig sharedPreferenceConfig;
     FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
-
+        sharedPreferenceConfig = new SharedPreferenceConfig(this);
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +51,13 @@ public class LoginActivity extends AppCompatActivity {
                 email = emailEt.getText().toString();
                 password = passEt.getText().toString();
                 firebaseAuth = FirebaseAuth.getInstance();
-                Validation validation = new Validation(LoginActivity.this);
+                validation = new Validation(LoginActivity.this);
                 validation.setLoginValidation(email,password,firebaseAuth,emailEt,passEt);
-//                if (Validation.log_status){
-//                    finish();
-//                }
-            }
+//                if (sharedPreferenceConfig.read_login_status())
+////                if (Validation.log_status){
+//                  finish();
+////                }
+           }
         });
 
     }

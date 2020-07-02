@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#2C5364"
     android:gravity="center"
+    android:fitsSystemWindows="false"
     android:orientation="vertical"
     tools:context=".view.SplashActivity">
 

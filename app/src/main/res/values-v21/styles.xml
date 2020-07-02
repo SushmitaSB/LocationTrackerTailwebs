@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+    </style>
+
+    <style name="StatusBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">#ffffff</item>
+        <item name="android:statusBarColor">#6DD5FA</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="StatusBarThemeStudent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">#ffffff</item>
+        <item name="android:statusBarColor">@color/colorPink</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+    <style name="StatusBarThemeLogin" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">#22000000</item>
+        <item name="android:statusBarColor">#77FBD786</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="StatusBarThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">#22000000</item>
+        <item name="android:statusBarColor">#2C5364</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+
+</resources>

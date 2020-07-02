@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(sharedPreferenceConfig.read_login_status()){
-                    Intent newIntent = new Intent(SplashActivity.this, MainActivity.class);
+                    Intent newIntent = new Intent(SplashActivity.this, DashboardActivity.class);
                     startActivity(newIntent);
                 }else {
                     Intent newIntent = new Intent(SplashActivity.this, IntroActivity.class);

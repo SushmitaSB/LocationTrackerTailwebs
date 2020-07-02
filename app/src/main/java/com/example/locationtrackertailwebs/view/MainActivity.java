@@ -11,28 +11,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.SetAlertDialog;
 import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 
 public class MainActivity extends AppCompatActivity {
 
         private Button yesButton, history;
-        TextView logout;
+        SetAlertDialog setAlertDialog;
         SharedPreferenceConfig sharedPreferenceConfig;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            yesButton = findViewById(R.id.button);
-            history = findViewById(R.id.buttonStop);
-            logout = findViewById(R.id.logoutId);
+            initializedVariables();
 
-            sharedPreferenceConfig = new SharedPreferenceConfig(MainActivity.this);
-            logout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setDialog("Are you sure you want to logout?", "logout");
-                }
-            });
             yesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -51,45 +43,18 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-            private void setDialog(String s, String string) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setMessage(s);
-                alertDialogBuilder.setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                if (string.equals("back")){
-                                    finish();
-                                }else {
-                                    sharedPreferenceConfig.LoginStatus(false);
-                                    Intent intent = new Intent(MainActivity.this, IntroActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-
-
-                            }
-                        });
-
-                alertDialogBuilder.setNegativeButton("cancel",
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-
-                            }
-                        });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-
+    private void initializedVariables() {
+        yesButton = findViewById(R.id.button);
+        history = findViewById(R.id.buttonStop);
+        setAlertDialog = new SetAlertDialog(this);
+        sharedPreferenceConfig = new SharedPreferenceConfig(MainActivity.this);
+    }
 
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        setDialog("Are you sure you want to exit?", "back");
+       finish();
     }
 
 

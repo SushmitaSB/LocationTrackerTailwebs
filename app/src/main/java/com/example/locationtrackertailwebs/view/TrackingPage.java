@@ -21,11 +21,15 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.Toast;
 
-import com.example.locationtrackertailwebs.DirectionHelper.TaskLoadedCallback;
 import com.example.locationtrackertailwebs.R;
 import com.example.locationtrackertailwebs.controler.Constants;
+import com.example.locationtrackertailwebs.controler.PermissionManager;
+import com.example.locationtrackertailwebs.controler.SetAlertDialog;
+import com.example.locationtrackertailwebs.controler.SetGoogleMap;
+import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 import com.example.locationtrackertailwebs.controler.service.LocationService;
 import com.example.locationtrackertailwebs.model.EventBusPojo;
+import com.example.locationtrackertailwebs.model.StopServiceEventBus;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -46,31 +50,23 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-public class TrackingPage extends AppCompatActivity implements OnMapReadyCallback, TaskLoadedCallback {
+public class TrackingPage extends AppCompatActivity implements OnMapReadyCallback {
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    public static ArrayList<Double> latList = new ArrayList<>();
-    public static ArrayList<Double> longList = new ArrayList<>();
     private Chronometer chronometer;
     private Handler handler;
     long tmMilisec, tStart, tBuff, tUpdate = 0L;
     int sec, min, milliSec;
     public static String total_time_track;
     private GoogleMap mMap;
-    public static ArrayList<Double> serviceLatList;
-    public static ArrayList<Double> serviceLongList;
-    private Geocoder geocoder;
-    private int ACCESS_LOCATION_REQUEST_CODE = 10001;
-    FusedLocationProviderClient fusedLocationProviderClient;
-    LocationRequest locationRequest;
     private  ArrayList<LatLng>  latLngArrayList = new ArrayList<>();
     public static ArrayList<Double> latListEventBus;
     public static ArrayList<Double> lonlistEventBus;
     public static Double latitudeEvent, longitudeEvent;
-
-    Marker userLocationMarker;
-    Circle userLocationAccuracyCircle;
     Button stopTracking;
     LatLng latLng;
+    SetGoogleMap setGoogleMap;
+    SharedPreferenceConfig sharedPreferenceConfig;
+    PermissionManager permissionManager;
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -90,27 +86,18 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
         initializedVariables();
-        if (ContextCompat.checkSelfPermission(
-                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                    TrackingPage.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_CODE_LOCATION_PERMISSION
-            );
+        sharedPreferenceConfig.BackButtonStatus(false);
+        permissionManager = new PermissionManager(this);
+        if (!permissionManager.setLocationPermission()){
+            stopTracking.setEnabled(false);
         } else {
             startLocationService();
             tStart = SystemClock.uptimeMillis();
             handler.postDelayed(runnable, 0);
             chronometer.start();
+            stopTracking.setEnabled(true);
         }
-
-
-         MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapNearBy);
-        mapFragment.getMapAsync(TrackingPage.this);
-
-
+        setFragment();
         //click on stop tracking button
         stopTracking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +109,7 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     //stop button click method
-    private void methodeForStopButtonClick() {
+    public void methodeForStopButtonClick() {
         total_time_track = min + ":" + sec;
         stopLocationService();
         tmMilisec = 0L;
@@ -144,6 +131,8 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         handler = new Handler();
         latListEventBus = new ArrayList<>();
         lonlistEventBus = new ArrayList<>();
+        setGoogleMap = new SetGoogleMap(TrackingPage.this);
+        sharedPreferenceConfig = new SharedPreferenceConfig(this);
     }
 
 
@@ -156,8 +145,10 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
                 tStart = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
                 chronometer.start();
+                stopTracking.setEnabled(true);
             } else {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                stopTracking.setEnabled(false);
             }
         }
     }
@@ -202,10 +193,6 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    @Override
-    public void onTaskDone(Object... values) {
-
-    }
 
 
     @Override
@@ -214,6 +201,7 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("mylog", "Added Markers");
         if (lonlistEventBus.size() != 0 && latListEventBus.size() !=0){
             setMarker();
+            //setGoogleMap.setMarkerAndPolyLine(mMap,null,null,latLngArrayList,longitudeEvent,longitudeEvent,"track");
         }
 
     }
@@ -229,21 +217,8 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
                 .width(10).color(Color.CYAN)
                 .geodesic(true));
 
-        createMarker(latitudeEvent,longitudeEvent, "Location: ");
+       createMarker(latitudeEvent,longitudeEvent, "Location: ");
 
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-//                new LatLng(latListEventBus.get(0),
-//                        lonlistEventBus.get(0)), 16));
-//        mMap.addMarker(place1);
-//        mMap.addMarker(place2);
-//        mMap.addPolyline((new PolylineOptions())
-//                .addAll(latLngArrayList)
-//                .width(10).color(Color.BLUE)
-//                .geodesic(true));
-
-//        for(int i = 0 ; i < latListEventBus.size() ; i++) {
-//            createMarker(latListEventBus.get(i),lonlistEventBus.get(i), "Location: "+ i+1);
-//        }
     }
 
     protected Marker createMarker(double latitude, double longitude, String title) {
@@ -252,53 +227,47 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker2)));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventBusPojo(EventBusPojo eventBusPojo) {
-
-//        latListEventBus = eventBusPojo.getLatlist();
-//        lonlistEventBus = eventBusPojo.getLonglist();
         latitudeEvent = eventBusPojo.getLatitude();
         longitudeEvent = eventBusPojo.getLongitude();
 
         if (latitudeEvent != null && longitudeEvent != null){
             latLng = new LatLng(latitudeEvent, longitudeEvent);
+            setGoogleMap = new SetGoogleMap(TrackingPage.this);
             latLngArrayList.add(latLng);
             if (mMap == null) {
                 Log.d("MyMap", "setUpMapIfNeeded");
-                MapFragment mapFragment = (MapFragment) getFragmentManager()
-                        .findFragmentById(R.id.mapNearBy);
-                mapFragment.getMapAsync(TrackingPage.this);
+                setFragment();
                 setMarker();
+               // setGoogleMap.setMarkerAndPolyLine(mMap,null,null,latLngArrayList,longitudeEvent,longitudeEvent,"track");
             }else {
                 setMarker();
+               // setGoogleMap.setMarkerAndPolyLine(mMap,null,null,latLngArrayList,longitudeEvent,longitudeEvent,"track");
             }
         }
-//        if (latListEventBus.size() != 0 && lonlistEventBus.size() != 0){
-//            for (int i=0; i<latListEventBus.size();i++ ){
-//                LatLng latLng = new LatLng(latListEventBus.get(i), lonlistEventBus.get(i));
-//                latLngArrayList.add(latLng);
-//                if (mMap == null) {
-//                    Log.d("MyMap", "setUpMapIfNeeded");
-//                    MapFragment mapFragment = (MapFragment) getFragmentManager()
-//                            .findFragmentById(R.id.mapNearBy);
-//                    mapFragment.getMapAsync(TrackingPage.this);
-//                    setMarker();
-//                }else {
-//                    setMarker();
-//                }
-//            }
-//
-//        }
 
-    };
+    }
+
+    @Subscribe
+    public void onServiceStopEventBus(StopServiceEventBus stopServiceEventBus){
+        methodeForStopButtonClick();
+    }
+
+    private void setFragment() {
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.mapNearBy);
+        mapFragment.getMapAsync(TrackingPage.this);
+    }
+
+    ;
 
     @Override
     protected void onStop() {
         super.onStop();
-       // stopLocationUpdates();
         EventBus.getDefault().unregister(this);
     }
 
@@ -306,6 +275,11 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-      //  startLocationUpdates();
+    }
+
+    @Override
+    public void onBackPressed() {
+        SetAlertDialog setAlertDialog = new SetAlertDialog(this);
+        setAlertDialog.setDialog("Are you sure you want to stop tracking and exit?", "track",sharedPreferenceConfig);
     }
 }

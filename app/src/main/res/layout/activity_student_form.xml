@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/layout_background"
+    tools:context=".view.StudentForm">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView android:src="@drawable/univ_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="40sp"
+            android:layout_marginBottom="54dp"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Name Label -->
+
+        <EditText android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:background="@drawable/edit_text_shape"
+            android:inputType="textEmailAddress"
+            android:layout_margin="5sp"
+            android:gravity="center"
+            android:hint="Name" />
+
+
+        <!-- Subject Label -->
+
+        <EditText android:id="@+id/input_subject"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:background="@drawable/edit_text_shape"
+            android:inputType="textEmailAddress"
+            android:layout_margin="5sp"
+            android:gravity="center"
+            android:hint="Subject" />
+
+
+        <!-- Marks Label -->
+
+        <EditText android:id="@+id/input_marks"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:inputType="number"
+            android:layout_margin="5sp"
+            android:gravity="center"
+            android:background="@drawable/edit_text_shape"
+            android:hint="Marks"/>
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:textAllCaps="false"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_shape_button"
+            android:text="Submit"/>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginLeft="15sp"
+    android:layout_marginRight="15sp">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10sp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="40sp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:gravity="center_vertical"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/blue"
+                android:id="@+id/nameId"/>
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:inputType="text"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:gravity="center_vertical"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/blue"
+                android:id="@+id/subjectId" />
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:gravity="center"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/blue"
+                android:id="@+id/marksId" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

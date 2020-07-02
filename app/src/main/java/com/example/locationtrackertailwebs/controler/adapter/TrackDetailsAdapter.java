@@ -54,12 +54,6 @@ public class TrackDetailsAdapter extends RecyclerView.Adapter<TrackDetailsAdapte
                                 }
                                 Bundle bundle = new Bundle();
                                 Intent intent = new Intent(context, MapActivity.class);
-//                                bundle.putDoubleArray("Lat_List", latArray);
-//                                bundle.putDoubleArray("Long_List", longArray);
-                                //intent.putExtra("Lat_List", latArray);
-                                 //intent.putExtras(bundle);
-//                                intent.putExtra("Lat_List", latlist);
-//                                intent.putExtra("Long_List", longlist);
                                     bundle.putSerializable("Lat_List", latlist);
                                     bundle.putSerializable("Long_List", longlist);
                                     intent.putExtras(bundle);

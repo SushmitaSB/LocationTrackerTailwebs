@@ -1,5 +1,6 @@
 package com.example.locationtrackertailwebs.controler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.locationtrackertailwebs.view.DashboardActivity;
 import com.example.locationtrackertailwebs.view.LoginActivity;
 import com.example.locationtrackertailwebs.view.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,8 +29,7 @@ import static com.example.locationtrackertailwebs.view.RegistrationActivity.TAG;
 
 
 public class Validation {
-    public static boolean reg_status = false;
-    public static boolean log_status = false;
+
     private Context context;
     private SharedPreferenceConfig sharedPreferenceConfig;
     private String userId;
@@ -65,7 +66,7 @@ public class Validation {
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "successfully user profile is created for uid-  " +
                                                             userId);
-                                                    reg_status = true;
+                                                    ((Activity)context).finish();
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
@@ -117,7 +118,40 @@ public class Validation {
 
     }
 
-// method for login validation
+
+    //StudentForm validation
+    public boolean setFormValidation(RealmManager realmManager, String name, String sub, String marks, EditText nameEt, EditText subEt, EditText marksEt){
+        boolean status = false;
+        if (!TextUtils.isEmpty(name) &&!TextUtils.isEmpty(sub) && !TextUtils.isEmpty(marks) ){
+            try {
+                if (Float.parseFloat(marks) > 100){
+                    marksEt.setError("Marks should not be more than 100");
+                }else {
+                    realmManager.setDataInStudentDetails(name, sub, marks);
+                    status = true;
+                }
+
+            }catch (Exception ex){
+                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                status = false;
+            }
+        }else if(TextUtils.isEmpty(name)){
+            nameEt.setError("Enter student name");
+            status = false;
+        }else if (TextUtils.isEmpty(sub)){
+            subEt.setError("Enter subject name");
+            status = false;
+        }else if (TextUtils.isEmpty(marks)){
+            marksEt.setError("Enter marks");
+            status = false;
+        }
+
+        return status;
+    }
+
+
+
+    // method for login validation
 public void setLoginValidation( final String email, String pass,final FirebaseAuth firebaseAuth,
                                  EditText emailEt, EditText passEt){
     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)){
@@ -131,9 +165,9 @@ public void setLoginValidation( final String email, String pass,final FirebaseAu
                         sharedPreferenceConfig = new SharedPreferenceConfig(context);
                         sharedPreferenceConfig.LoginStatus(true);
                         sharedPreferenceConfig.LoginUser(userEmail);
-                        log_status = true;
-                        Intent intent = new Intent(context, MainActivity.class);
+                        Intent intent = new Intent(context, DashboardActivity.class);
                         context.startActivity(intent);
+                        ((Activity)context).finish();
                     }else {
                         Toast.makeText(context, "Error ! "+ task.getException(), Toast.LENGTH_SHORT).show();
                     }

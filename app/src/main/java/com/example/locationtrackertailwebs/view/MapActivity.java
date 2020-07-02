@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.locationtrackertailwebs.R;
-import com.example.locationtrackertailwebs.DirectionHelper.TaskLoadedCallback;
+import com.example.locationtrackertailwebs.controler.SetGoogleMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -28,16 +28,13 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, TaskLoadedCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final float DEFAULT_ZOOM = 15;
     private GoogleMap mMap;
-    private MarkerOptions place1, place2;
     Bundle bundle;
-    private Polyline currentPolyline;
-
     @BindView(R.id.clearback)
     ImageView imageView;
+    SetGoogleMap setGoogleMap;
     //Dummy data
 //    private static  LatLng p1 = new LatLng(27.658143, 85.3199503);
 //    private static  LatLng p2 = new LatLng(27.667491, 85.3208583);
@@ -88,6 +85,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         i = getIntent();
         bundle=i.getExtras();
         methodForFragmentSetUp();
+        setGoogleMap = new SetGoogleMap(MapActivity.this);
 
     }
 
@@ -101,56 +99,56 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d("mylog", "Added Markers");
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(latList.get(0),
-                        longList.get(0)), DEFAULT_ZOOM));
-//        mMap.addMarker(place1);
-//        mMap.addMarker(place2);
-        mMap.addPolyline((new PolylineOptions())
-                .addAll(latLngArrayList)
-                .width(10).color(Color.CYAN)
-                .geodesic(true));
+        setGoogleMap.setMarkerAndPolyLine(mMap,latList,longList,latLngArrayList,null,null,"map");
 
-//        for(int i = 0 ; i < latList.size() ; i++) {
-//            createMarker(latList.get(i),longList.get(i), "Location: "+ i+1);
-//        }
-
-        int index = latList.size()-1;
-        createMarker(latList.get(0),longList.get(0), "Start Location: ",BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        createMarker(latList.get(index),longList.get(index), "End Location: ", BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+//                new LatLng(latList.get(0),
+//                        longList.get(0)), DEFAULT_ZOOM));
+//        mMap.addPolyline((new PolylineOptions())
+//                .addAll(latLngArrayList)
+//                .width(10).color(Color.CYAN)
+//                .geodesic(true));
+//
+////        for(int i = 0 ; i < latList.size() ; i++) {
+////            createMarker(latList.get(i),longList.get(i), "Location: "+ i+1);
+////        }
+//
+//        int index = latList.size()-1;
+//        createMarker(latList.get(0),longList.get(0), "Start Location: ",BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+//        createMarker(latList.get(index),longList.get(index), "End Location: ", BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
 
     }
 
-    protected Marker createMarker(double latitude, double longitude, String title, BitmapDescriptor bitmapDescriptor) {
+//    protected Marker createMarker(double latitude, double longitude, String title, BitmapDescriptor bitmapDescriptor) {
+//
+//        return mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(latitude, longitude))
+//                .anchor(0.5f, 0.5f)
+//                .title(title)
+//                 .icon(bitmapDescriptor));
+//    }
 
-        return mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
-                .anchor(0.5f, 0.5f)
-                .title(title)
-                 .icon(bitmapDescriptor));
-    }
-
-    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Mode
-        String mode = "mode=" + directionMode;
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + mode;
-        // Output format
-        String output = "json";
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-        return url;
-    }
+//    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+//        // Origin of route
+//        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+//        // Destination of route
+//        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+//        // Mode
+//        String mode = "mode=" + directionMode;
+//        // Building the parameters to the web service
+//        String parameters = str_origin + "&" + str_dest + "&" + mode;
+//        // Output format
+//        String output = "json";
+//        // Building the url to the web service
+//        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+//        return url;
+//    }
 
 
-    @Override
-    public void onTaskDone(Object... values) {
-        if (currentPolyline != null)
-            currentPolyline.remove();
-        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-    }
+//    @Override
+//    public void onTaskDone(Object... values) {
+//        if (currentPolyline != null)
+//            currentPolyline.remove();
+//        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+//    }
 }

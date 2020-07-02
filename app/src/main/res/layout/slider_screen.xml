@@ -43,10 +43,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/backgroundLayout"
             android:fontFamily="sans-serif"
-            android:text="gggggg"
+            android:text="@string/be_part"
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -59,10 +59,10 @@
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
             android:layout_below="@id/tvHeading"
-            android:text="kkkkk"
+            android:text="@string/our_world"
             android:fontFamily="sans-serif"
             android:id="@+id/tvText"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

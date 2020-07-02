@@ -57,11 +57,9 @@ public class SliderAdapter extends PagerAdapter {
                 linearLayout.setImageResource(R.drawable.man_img);
                 a = AnimationUtils.loadAnimation(context, R.anim.scale);
                 a.reset();
-//                    linearLayout.clearAnimation();
-//                    linearLayout.startAnimation(a);
                 Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
                         R.drawable.man_img);
-                setColor.setTextColorForImage(textViewHeading,textView, bitmap);
+               // setColor.setTextColorForImage(textViewHeading,textView, bitmap);
                 textViewHeading.setText(R.string.be_part);
                 textView.setText(R.string.our_world);
                 indicator1.setImageResource(R.drawable.active_dot_layout);
@@ -78,7 +76,7 @@ public class SliderAdapter extends PagerAdapter {
 //                    linearLayout.startAnimation(a);
                 Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(),
                         R.drawable.women_img);
-                setColor.setTextColorForImage(textViewHeading,textView, bitmap1);
+                //setColor.setTextColorForImage(textViewHeading,textView, bitmap1);
                 textViewHeading.setText(R.string.perfect_your);
                 textView.setText(R.string.everything);
                 indicator1.setImageResource(R.drawable.non_active_dot_xml);
@@ -88,14 +86,14 @@ public class SliderAdapter extends PagerAdapter {
                 indicator3.setImageResource(R.drawable.non_active_dot_xml);
                 break;
             case 2:
-                linearLayout.setImageResource(R.drawable.earth_img);
+                linearLayout.setImageResource(R.drawable.im);
                 a = AnimationUtils.loadAnimation(context, R.anim.scale);
                 a.reset();
 //                    linearLayout.clearAnimation();
 //                    linearLayout.startAnimation(a);
                 Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(),
                         R.drawable.earth_img);
-                setColor.setTextColorForImage(textViewHeading,textView, bitmap2);
+                //setColor.setTextColorForImage(textViewHeading,textView, bitmap2);
                 textViewHeading.setText(R.string.postgraduate);
                 textView.setText(R.string.join);
                 indicator1.setImageResource(R.drawable.non_active_dot_xml);

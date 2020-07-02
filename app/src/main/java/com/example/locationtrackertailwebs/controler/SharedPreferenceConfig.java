@@ -23,6 +23,18 @@ public class SharedPreferenceConfig {
         return status;
     }
 
+    public void BackButtonStatus(boolean status){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("back_button_status", status);
+        editor.commit();
+    }
+
+    public boolean read_back_button_status(){
+        boolean status = false;
+        status = sharedPreferences.getBoolean("back_button_status",false);
+        return status;
+    }
+
     public void LoginUser(String email){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("login_user", email);

@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.PermissionManager;
 import com.example.locationtrackertailwebs.controler.adapter.SliderAdapter;
 import com.example.locationtrackertailwebs.controler.ZoomOutPageTransformer;
 
@@ -29,6 +33,7 @@ public class IntroActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     private SliderAdapter sliderAdapter;
+    PermissionManager permissionManager;
     private String data;
     private Handler handler;
     private int delay = 3000; //milliseconds
@@ -50,7 +55,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         initializedVariables();
-
+        permissionManager.setLocationPermission();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -96,6 +101,7 @@ public class IntroActivity extends AppCompatActivity {
         sliderAdapter = new SliderAdapter(IntroActivity.this);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setAdapter(sliderAdapter);
+        permissionManager = new PermissionManager(IntroActivity.this);
     }
 
     @Override

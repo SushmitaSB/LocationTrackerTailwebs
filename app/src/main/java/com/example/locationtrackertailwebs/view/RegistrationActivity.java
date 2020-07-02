@@ -2,10 +2,12 @@ package com.example.locationtrackertailwebs.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.locationtrackertailwebs.R;
 import com.example.locationtrackertailwebs.controler.Validation;
@@ -36,6 +38,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
     @BindView(R.id.btId)
     Button button;
+
+    @BindView(R.id.clear)
+    ImageView imageViewClear;
+
     private FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     String userId;
@@ -45,9 +51,14 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        ButterKnife.bind(this);
-        firebaseAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        initializedVariables();
+        imageViewClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistrationActivity.this, IntroActivity.class);
+                startActivity(intent);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,10 +71,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 Validation validation = new Validation(RegistrationActivity.this);
                 validation.setSigninValidation(fName, lName, email, pass,cpass,firebaseAuth,firestore,nameEt,lastNameEt,emailEt,passEt,conPassEt);
-                if (Validation.reg_status){
-                    finish();
-                }
+
             }
         });
+    }
+
+    private void initializedVariables() {
+        ButterKnife.bind(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
     }
 }
