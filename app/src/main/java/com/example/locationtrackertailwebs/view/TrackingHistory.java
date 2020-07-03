@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class TrackingHistory extends AppCompatActivity {
     @BindView(R.id.clearId)
     ImageView imageView;
 
+    @BindView(R.id.nodatafoundId)
+    ImageView nodatafound;
     TrackDetailsAdapter mAdapter;
     FirebaseFirestore firestore;
     FirebaseAuth firebaseAuth;
@@ -44,6 +48,8 @@ public class TrackingHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_tracking_history);
         initializedVariables();
         fetchData();
@@ -71,10 +77,13 @@ public class TrackingHistory extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.isEmpty()) {
                             Log.d("chk", "onSuccess: LIST EMPTY");
+                            recyclerView.setVisibility(View.GONE);
+                            nodatafound.setVisibility(View.VISIBLE);
                             return;
                         } else {
                             List<TrackDetails> types = queryDocumentSnapshots.toObjects(TrackDetails.class);
                             // Add all to your list
+                            recyclerView.setVisibility(View.VISIBLE);
                             mArrayList.addAll(types);
                             Log.d("chk", "onSuccess: " + mArrayList);
                             //set layout manager
@@ -82,6 +91,7 @@ public class TrackingHistory extends AppCompatActivity {
                             recyclerView.setLayoutManager(mLayoutManager);
                             mAdapter = new TrackDetailsAdapter(TrackingHistory.this, mArrayList);
                             recyclerView.setAdapter(mAdapter);
+                            nodatafound.setVisibility(View.GONE);
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

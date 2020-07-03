@@ -14,4 +14,11 @@
     <string name="get_started">Get Started</string>
     <string name="dont_have">Do not have an account?</string>
     <string name="make_your_university">Make your university life the best it can be,\nin a world of opportunity. </string>
+    <string name="permission_text_audio">This app is using audio for input.</string>
+    <string name="ok">OK</string>
+    <string name="ask">Ask me</string>
+    <string name="listening">Listening</string>
+    <string name="input">Your query: %1$s</string>
+    <string name="answer">Agent answer: %1$s</string>
+    <string name="intent">Intent name: %1$s</string>
 </resources>

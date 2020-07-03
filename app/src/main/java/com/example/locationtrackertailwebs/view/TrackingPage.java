@@ -17,8 +17,11 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
@@ -55,7 +58,7 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     private Chronometer chronometer;
     private Handler handler;
     long tmMilisec, tStart, tBuff, tUpdate = 0L;
-    int sec, min, milliSec;
+    int sec, min, milliSec,hour;
     public static String total_time_track;
     private GoogleMap mMap;
     private  ArrayList<LatLng>  latLngArrayList = new ArrayList<>();
@@ -63,6 +66,7 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     public static ArrayList<Double> lonlistEventBus;
     public static Double latitudeEvent, longitudeEvent;
     Button stopTracking;
+    TextView secTextView;
     LatLng latLng;
     SetGoogleMap setGoogleMap;
     SharedPreferenceConfig sharedPreferenceConfig;
@@ -72,20 +76,30 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         public void run() {
             tmMilisec = SystemClock.uptimeMillis() - tStart;
             tUpdate = tBuff + tmMilisec;
-            sec = (int) (tUpdate / 1000);
-            min = sec / 60;
-            sec = sec % 60;
-            milliSec = (int) (tUpdate % 1000);
-            chronometer.setText(String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", milliSec));
+//            sec = (int) (tUpdate / 1000);
+//            min = sec / 60;
+//            sec = sec % 60;
+//            milliSec = (int) (tUpdate % 1000);
+            hour   = (int)(tUpdate /3600000);
+             min = (int)(tUpdate - hour*3600000)/60000;
+             sec= (int)(tUpdate - hour*3600000- min*60000)/1000 ;
+            String t = (hour < 10 ? "0"+hour: hour)+":"+(min < 10 ? "0"+min: min);
+            String sectv =  (sec < 10 ? "0"+sec: sec) + " seconds";
+            chronometer.setText(t);
+            secTextView.setText(sectv);
             handler.postDelayed(this, 60);
+            //String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", milliSec)
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_tracking_page);
         initializedVariables();
+
         sharedPreferenceConfig.BackButtonStatus(false);
         permissionManager = new PermissionManager(this);
         if (!permissionManager.setLocationPermission()){
@@ -110,16 +124,18 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
 
     //stop button click method
     public void methodeForStopButtonClick() {
-        total_time_track = min + ":" + sec;
+        total_time_track =hour + ":" + min + ":" + sec;
         stopLocationService();
         tmMilisec = 0L;
         tBuff = 0L;
         tStart = 0L;
         tUpdate = 0L;
+        hour = 0;
         sec = 0;
         min = 0;
-        milliSec = 0;
-        chronometer.setText("00:00:00");
+//        milliSec = 0;
+        chronometer.setText("00:00");
+        secTextView.setText("00 seconds");
         chronometer.stop();
         Toast.makeText(TrackingPage.this, "total tracked time: " + total_time_track, Toast.LENGTH_SHORT).show();
         finish();
@@ -128,6 +144,7 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     private void initializedVariables() {
         stopTracking = findViewById(R.id.stopTrackingId);
         chronometer = findViewById(R.id.chronometer);
+        secTextView = findViewById(R.id.secId);
         handler = new Handler();
         latListEventBus = new ArrayList<>();
         lonlistEventBus = new ArrayList<>();

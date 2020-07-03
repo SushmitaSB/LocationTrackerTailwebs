@@ -22,8 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="25sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             android:text="Track View"/>
     </androidx.appcompat.widget.Toolbar>
 

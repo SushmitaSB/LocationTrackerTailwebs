@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.locationtrackertailwebs">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:name=".controler.InitRealm"
         android:allowBackup="true"
@@ -11,13 +10,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ChatBotActivity"></activity>
-        <activity android:name=".view.StudentForm"
-            android:theme="@style/StatusBarThemeLogin"></activity>
-        <activity android:name=".view.StudentDetailsActivity"
-            android:theme="@style/StatusBarThemeStudent"/>
+        <activity android:name=".view.ChatBot"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".view.ChatBotActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.StudentForm"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarThemeLogin" />
+        <activity
+            android:name=".view.StudentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarThemeStudent" />
         <activity
             android:name=".view.DashboardActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/StatusBarThemeLogin" />
         <activity
             android:name=".view.TrackingPage"
@@ -37,7 +44,7 @@
         <activity
             android:name=".view.IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/StatusBarTheme" />
+            />
         <activity
             android:name=".view.SplashActivity"
             android:screenOrientation="portrait"
@@ -48,7 +55,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MapActivity" />
+        <activity android:name=".view.MapActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait"
@@ -66,12 +74,14 @@
             android:enabled="true"
             android:exported="false" />
     </application>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
