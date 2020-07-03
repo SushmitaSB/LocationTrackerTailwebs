@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.ChatBot"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarThemeLogin"
+            ></activity>
         <activity android:name=".view.ChatBotActivity"
             android:screenOrientation="portrait"/>
         <activity

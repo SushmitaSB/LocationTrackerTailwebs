@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 import com.example.locationtrackertailwebs.controler.Validation;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private String email, password;
     private Validation validation;
     SharedPreferenceConfig sharedPreferenceConfig;
+    private CheckInternetConnection checkInternetConnection;
     FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        checkInternetConnection = new CheckInternetConnection(this);
         sharedPreferenceConfig = new SharedPreferenceConfig(this);
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +56,12 @@ public class LoginActivity extends AppCompatActivity {
                 password = passEt.getText().toString();
                 firebaseAuth = FirebaseAuth.getInstance();
                 validation = new Validation(LoginActivity.this);
-                validation.setLoginValidation(email,password,firebaseAuth,emailEt,passEt);
-//                if (sharedPreferenceConfig.read_login_status())
-////                if (Validation.log_status){
-//                  finish();
-////                }
+                if (checkInternetConnection.hasConnection()) {
+                    validation.setLoginValidation(email, password, firebaseAuth, emailEt, passEt);
+                }else {
+                    Toast.makeText(LoginActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
+
            }
         });
 

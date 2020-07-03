@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.view.MapActivity;
 import com.example.locationtrackertailwebs.R;
 import com.example.locationtrackertailwebs.model.TrackDetails;
@@ -22,10 +24,11 @@ import java.util.List;
 public class TrackDetailsAdapter extends RecyclerView.Adapter<TrackDetailsAdapter.MyViewHolder> {
     private Context context;
     private  List<TrackDetails> types;
+    private CheckInternetConnection checkInternetConnection;
     public TrackDetailsAdapter(Context context,  List<TrackDetails> types){
         this.context = context;
         this.types = types;
-    }
+        checkInternetConnection = new CheckInternetConnection(context);    }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,12 +55,17 @@ public class TrackDetailsAdapter extends RecyclerView.Adapter<TrackDetailsAdapte
                                     latArray[i] = latlist.get(i).doubleValue();
                                     longArray[i] = longlist.get(i).doubleValue();
                                 }
+                if (checkInternetConnection.hasConnection()) {
                                 Bundle bundle = new Bundle();
                                 Intent intent = new Intent(context, MapActivity.class);
                                     bundle.putSerializable("Lat_List", latlist);
                                     bundle.putSerializable("Long_List", longlist);
                                     intent.putExtras(bundle);
                                 context.startActivity(intent);
+                }else {
+                    Toast.makeText(context, "There is no internet connection, please check your connection", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

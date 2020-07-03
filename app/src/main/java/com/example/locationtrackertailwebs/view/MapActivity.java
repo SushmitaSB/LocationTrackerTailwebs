@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.SetGoogleMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,6 +51,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     ArrayList<Double> longList;
     ArrayList<LatLng> latLngArrayList;
     ArrayList<Marker> markerOptionsArrayList;
+    private CheckInternetConnection checkInternetConnection;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         bundle=i.getExtras();
         methodForFragmentSetUp();
         setGoogleMap = new SetGoogleMap(MapActivity.this);
+        checkInternetConnection = new CheckInternetConnection(MapActivity.this);
 
     }
 
@@ -103,56 +107,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d("mylog", "Added Markers");
-        setGoogleMap.setMarkerAndPolyLine(mMap,latList,longList,latLngArrayList,null,null,"map");
-
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-//                new LatLng(latList.get(0),
-//                        longList.get(0)), DEFAULT_ZOOM));
-//        mMap.addPolyline((new PolylineOptions())
-//                .addAll(latLngArrayList)
-//                .width(10).color(Color.CYAN)
-//                .geodesic(true));
-//
-////        for(int i = 0 ; i < latList.size() ; i++) {
-////            createMarker(latList.get(i),longList.get(i), "Location: "+ i+1);
-////        }
-//
-//        int index = latList.size()-1;
-//        createMarker(latList.get(0),longList.get(0), "Start Location: ",BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-//        createMarker(latList.get(index),longList.get(index), "End Location: ", BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+        if (checkInternetConnection.hasConnection()) {
+            setGoogleMap.setMarkerAndPolyLine(mMap, latList, longList, latLngArrayList, null, null, "map");
+        }else {
+            Toast.makeText(this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+        }
 
     }
-
-//    protected Marker createMarker(double latitude, double longitude, String title, BitmapDescriptor bitmapDescriptor) {
-//
-//        return mMap.addMarker(new MarkerOptions()
-//                .position(new LatLng(latitude, longitude))
-//                .anchor(0.5f, 0.5f)
-//                .title(title)
-//                 .icon(bitmapDescriptor));
-//    }
-
-//    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-//        // Origin of route
-//        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-//        // Destination of route
-//        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-//        // Mode
-//        String mode = "mode=" + directionMode;
-//        // Building the parameters to the web service
-//        String parameters = str_origin + "&" + str_dest + "&" + mode;
-//        // Output format
-//        String output = "json";
-//        // Building the url to the web service
-//        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-//        return url;
-//    }
-
-
-//    @Override
-//    public void onTaskDone(Object... values) {
-//        if (currentPolyline != null)
-//            currentPolyline.remove();
-//        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-//    }
 }

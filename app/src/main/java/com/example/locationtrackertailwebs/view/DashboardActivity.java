@@ -9,8 +9,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.SetAlertDialog;
 import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 
@@ -32,6 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
     SetAlertDialog setAlertDialog;
     SharedPreferenceConfig sharedPreferenceConfig;
     private Animation a, b;
+    CheckInternetConnection checkInternetConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,24 +44,36 @@ public class DashboardActivity extends AppCompatActivity {
         textViewStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, StudentDetailsActivity.class);
-                startActivity(intent);
+                if (checkInternetConnection.hasConnection()) {
+                    Intent intent = new Intent(DashboardActivity.this, StudentDetailsActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(DashboardActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         trackingTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
-                startActivity(intent);
+                if (checkInternetConnection.hasConnection()) {
+                    Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(DashboardActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         chatBotTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this,ChatBot.class);
-                startActivity(intent);
+                if (checkInternetConnection.hasConnection()) {
+                    Intent intent = new Intent(DashboardActivity.this, ChatBot.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(DashboardActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +105,8 @@ public class DashboardActivity extends AppCompatActivity {
         textViewStudent.startAnimation(a);
         trackingTextView.startAnimation(b);
         chatBotTv.startAnimation(a);
+
+        checkInternetConnection = new CheckInternetConnection(DashboardActivity.this);
     }
 
     @Override

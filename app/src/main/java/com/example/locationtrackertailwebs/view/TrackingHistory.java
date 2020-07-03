@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.adapter.TrackDetailsAdapter;
 import com.example.locationtrackertailwebs.model.TrackDetails;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -45,6 +46,7 @@ public class TrackingHistory extends AppCompatActivity {
     FirebaseFirestore firestore;
     FirebaseAuth firebaseAuth;
     List<TrackDetails> mArrayList;
+    CheckInternetConnection checkInternetConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,11 @@ public class TrackingHistory extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_tracking_history);
         initializedVariables();
-        fetchData();
+        if (checkInternetConnection.hasConnection()) {
+            fetchData();
+        }else {
+            Toast.makeText(this, "There is no internet connection, please check your connection", Toast.LENGTH_SHORT).show();
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +72,7 @@ public class TrackingHistory extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         mArrayList = new ArrayList<>();
+        checkInternetConnection = new CheckInternetConnection(TrackingHistory.this);
     }
 
     public void fetchData() {

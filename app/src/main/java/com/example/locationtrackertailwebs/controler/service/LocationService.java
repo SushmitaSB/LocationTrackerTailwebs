@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.Constants;
 import com.example.locationtrackertailwebs.view.TrackingPage;
 import com.example.locationtrackertailwebs.model.EventBusPojo;
@@ -47,6 +48,7 @@ public class LocationService extends Service {
     FirebaseFirestore firestore;
     ArrayList<Double> latlistEvent = new ArrayList<>();
     ArrayList<Double> longlistEvent = new ArrayList<>();
+
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -152,7 +154,9 @@ public class LocationService extends Service {
             String action = intent.getAction();
             if (action != null){
                 if (action.equals(Constants.ACTION_START_LOCATION_SERVICE)){
-                    startLocationService();
+
+                        startLocationService();
+
                 }else if (action.equals(Constants.ACTION_STOP_LOCATION_SERVICE)){
                     stopLocationService();
                 }

@@ -28,8 +28,8 @@
 
         <EditText android:id="@+id/input_name"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:background="@drawable/edit_text_shape"
+            android:layout_height="50sp"
+            android:background="@drawable/edittextshape"
             android:inputType="textEmailAddress"
             android:layout_margin="5sp"
             android:gravity="center"
@@ -40,8 +40,8 @@
 
         <EditText android:id="@+id/input_subject"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:background="@drawable/edit_text_shape"
+            android:layout_height="50sp"
+            android:background="@drawable/edittextshape"
             android:inputType="textEmailAddress"
             android:layout_margin="5sp"
             android:gravity="center"
@@ -52,18 +52,18 @@
 
         <EditText android:id="@+id/input_marks"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:inputType="number"
             android:layout_margin="5sp"
             android:gravity="center"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/edittextshape"
             android:hint="Marks"/>
 
 
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60sp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"

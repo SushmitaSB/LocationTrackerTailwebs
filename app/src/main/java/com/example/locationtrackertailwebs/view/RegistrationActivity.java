@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.Validation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,7 +48,7 @@ public class RegistrationActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     String userId;
 
-
+    private  CheckInternetConnection checkInternetConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +70,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 pass = passEt.getText().toString();
                 email = emailEt.getText().toString();
                 cpass = conPassEt.getText().toString();
-
+                if (checkInternetConnection.hasConnection()) {
                 Validation validation = new Validation(RegistrationActivity.this);
-                validation.setSigninValidation(fName, lName, email, pass,cpass,firebaseAuth,firestore,nameEt,lastNameEt,emailEt,passEt,conPassEt);
-
+                validation.setSigninValidation(fName, lName, email, pass, cpass, firebaseAuth, firestore, nameEt, lastNameEt, emailEt, passEt, conPassEt);
+            }else {
+                    Toast.makeText(RegistrationActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -80,5 +84,6 @@ public class RegistrationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        checkInternetConnection = new CheckInternetConnection(RegistrationActivity.this);
     }
 }

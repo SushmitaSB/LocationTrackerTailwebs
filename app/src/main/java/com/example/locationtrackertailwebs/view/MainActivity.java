@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.SetAlertDialog;
 import com.example.locationtrackertailwebs.controler.SharedPreferenceConfig;
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         private Button yesButton, history;
         SetAlertDialog setAlertDialog;
         SharedPreferenceConfig sharedPreferenceConfig;
+        CheckInternetConnection checkInternetConnection;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -28,8 +31,12 @@ public class MainActivity extends AppCompatActivity {
             yesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, TrackingPage.class);
-                    startActivity(intent);
+                    if (checkInternetConnection.hasConnection()) {
+                        Intent intent = new Intent(MainActivity.this, TrackingPage.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(MainActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -37,8 +44,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // stopLocationService();
-                    Intent intent = new Intent(MainActivity.this, TrackingHistory.class);
-                    startActivity(intent);
+                    if (checkInternetConnection.hasConnection()) {
+                        Intent intent = new Intent(MainActivity.this, TrackingHistory.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(MainActivity.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -49,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         history = findViewById(R.id.buttonStop);
         setAlertDialog = new SetAlertDialog(this);
         sharedPreferenceConfig = new SharedPreferenceConfig(MainActivity.this);
+        checkInternetConnection = new CheckInternetConnection(MainActivity.this);
     }
 
     @Override

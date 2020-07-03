@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.PermissionManager;
 import com.example.locationtrackertailwebs.controler.adapter.SliderAdapter;
 import com.example.locationtrackertailwebs.controler.ZoomOutPageTransformer;
@@ -33,6 +34,7 @@ public class IntroActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
+    private CheckInternetConnection checkInternetConnection;
     private SliderAdapter sliderAdapter;
     PermissionManager permissionManager;
     private String data;
@@ -106,6 +108,7 @@ public class IntroActivity extends AppCompatActivity {
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setAdapter(sliderAdapter);
         permissionManager = new PermissionManager(IntroActivity.this);
+        checkInternetConnection = new CheckInternetConnection(this);
     }
 
     @Override

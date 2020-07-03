@@ -35,6 +35,7 @@ public class Validation {
     private String userId;
     public Validation(Context context) {
         this.context = context;
+
     }
     //Registration field validation
     public void setSigninValidation(final String fName, final String lName, final String email, String pass, String cpass, final FirebaseAuth firebaseAuth, final FirebaseFirestore firestore,

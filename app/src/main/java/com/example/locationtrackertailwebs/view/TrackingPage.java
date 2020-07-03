@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.locationtrackertailwebs.R;
+import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.Constants;
 import com.example.locationtrackertailwebs.controler.PermissionManager;
 import com.example.locationtrackertailwebs.controler.SetAlertDialog;
@@ -65,6 +66,7 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     public static ArrayList<Double> latListEventBus;
     public static ArrayList<Double> lonlistEventBus;
     public static Double latitudeEvent, longitudeEvent;
+    private CheckInternetConnection checkInternetConnection;
     Button stopTracking;
     TextView secTextView;
     LatLng latLng;
@@ -74,21 +76,21 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            tmMilisec = SystemClock.uptimeMillis() - tStart;
-            tUpdate = tBuff + tmMilisec;
-//            sec = (int) (tUpdate / 1000);
-//            min = sec / 60;
-//            sec = sec % 60;
-//            milliSec = (int) (tUpdate % 1000);
-            hour   = (int)(tUpdate /3600000);
-             min = (int)(tUpdate - hour*3600000)/60000;
-             sec= (int)(tUpdate - hour*3600000- min*60000)/1000 ;
-            String t = (hour < 10 ? "0"+hour: hour)+":"+(min < 10 ? "0"+min: min);
-            String sectv =  (sec < 10 ? "0"+sec: sec) + " seconds";
-            chronometer.setText(t);
-            secTextView.setText(sectv);
-            handler.postDelayed(this, 60);
-            //String.format("%02d", min) + ":" + String.format("%02d", sec) + ":" + String.format("%02d", milliSec)
+            if (checkInternetConnection.hasConnection()) {
+                tmMilisec = SystemClock.uptimeMillis() - tStart;
+                tUpdate = tBuff + tmMilisec;
+                hour = (int) (tUpdate / 3600000);
+                min = (int) (tUpdate - hour * 3600000) / 60000;
+                sec = (int) (tUpdate - hour * 3600000 - min * 60000) / 1000;
+                String t = (hour < 10 ? "0" + hour : hour) + ":" + (min < 10 ? "0" + min : min);
+                String sectv = (sec < 10 ? "0" + sec : sec) + " seconds";
+                chronometer.setText(t);
+                secTextView.setText(sectv);
+                handler.postDelayed(this, 60);
+            }else {
+                Toast.makeText(TrackingPage.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+            }
+
         }
     };
 
@@ -105,18 +107,40 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         if (!permissionManager.setLocationPermission()){
             stopTracking.setEnabled(false);
         } else {
-            startLocationService();
-            tStart = SystemClock.uptimeMillis();
-            handler.postDelayed(runnable, 0);
-            chronometer.start();
-            stopTracking.setEnabled(true);
+            if (checkInternetConnection.hasConnection()) {
+                startLocationService();
+                tStart = SystemClock.uptimeMillis();
+                handler.postDelayed(runnable, 0);
+                chronometer.start();
+                stopTracking.setEnabled(true);
+            }else {
+                Toast.makeText(this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                stopLocationService();
+                tmMilisec = 0L;
+                tBuff = 0L;
+                tStart = 0L;
+                tUpdate = 0L;
+                hour = 0;
+                sec = 0;
+                min = 0;
+//        milliSec = 0;
+                chronometer.setText("00:00");
+                secTextView.setText("00 seconds");
+                chronometer.stop();
+                Toast.makeText(TrackingPage.this, "total tracked time: " + total_time_track, Toast.LENGTH_SHORT).show();
+                stopTracking.setEnabled(false);
+            }
         }
         setFragment();
         //click on stop tracking button
         stopTracking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkInternetConnection.hasConnection()) {
                 methodeForStopButtonClick();
+                }else{
+                    Toast.makeText(TrackingPage.this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -150,6 +174,8 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         lonlistEventBus = new ArrayList<>();
         setGoogleMap = new SetGoogleMap(TrackingPage.this);
         sharedPreferenceConfig = new SharedPreferenceConfig(this);
+        checkInternetConnection = new CheckInternetConnection(this);
+
     }
 
 
@@ -158,11 +184,15 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationService();
-                tStart = SystemClock.uptimeMillis();
-                handler.postDelayed(runnable, 0);
-                chronometer.start();
-                stopTracking.setEnabled(true);
+                if (checkInternetConnection.hasConnection()) {
+                    startLocationService();
+                    tStart = SystemClock.uptimeMillis();
+                    handler.postDelayed(runnable, 0);
+                    chronometer.start();
+                    stopTracking.setEnabled(true);
+                }else{
+                    Toast.makeText(this, "There is no internet connection", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
                 stopTracking.setEnabled(false);
@@ -271,7 +301,11 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
 
     @Subscribe
     public void onServiceStopEventBus(StopServiceEventBus stopServiceEventBus){
-        methodeForStopButtonClick();
+        if (checkInternetConnection.hasConnection()) {
+            methodeForStopButtonClick();
+        }else {
+            Toast.makeText(this, "There is bo internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setFragment() {
@@ -296,7 +330,11 @@ public class TrackingPage extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onBackPressed() {
-        SetAlertDialog setAlertDialog = new SetAlertDialog(this);
-        setAlertDialog.setDialog("Are you sure you want to stop tracking and exit?", "track",sharedPreferenceConfig);
+        if (checkInternetConnection.hasConnection()) {
+            SetAlertDialog setAlertDialog = new SetAlertDialog(this);
+            setAlertDialog.setDialog("Are you sure you want to stop tracking and exit?", "track", sharedPreferenceConfig);
+        }else {
+            finish();
+        }
     }
 }

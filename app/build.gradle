@@ -31,6 +31,19 @@ android {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 dependencies {
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -42,6 +55,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.github.jd-alexander:library:1.1.0'
@@ -59,17 +73,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'com.jakewharton:butterknife:10.2.1'
-  //  implementation 'ai.api:sdk:2.0.7@aar'
-// api.ai SDK dependencies
-   // implementation 'com.google.code.gson:gson:2.3'
-   // implementation 'commons-io:commons-io:2.4'
-   // implementation 'com.google.cloud:google-cloud-dialogflow:0.67.0-alpha'
-    //implementation 'io.grpc:grpc-okhttp:1.15.1 '
-
-   // implementation 'ai.api:libai:1.6.12'
-  //  implementation 'ai.api:sdk:2.0.7@aar'
-   // implementation 'io.kommunicate:kommunicate:1.6.3'
+    //implementation 'io.kommunicate:kommunicate:2.0.1'
     //implementation 'com.google.code.gson:gson:2.3'
     //implementation 'commons-io:commons-io:2.4'
-
 }
