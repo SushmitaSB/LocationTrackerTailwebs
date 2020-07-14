@@ -15,6 +15,9 @@ import com.example.locationtrackertailwebs.controler.CheckInternetConnection;
 import com.example.locationtrackertailwebs.controler.Validation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,12 +50,15 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     String userId;
+    private MixpanelAPI mixpanelAPI;
 
     private  CheckInternetConnection checkInternetConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+       // final String trackingDistinctId = getTrackingDistinctId();
+
         initializedVariables();
         imageViewClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +84,18 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mixpanelAPI = MixpanelAPI.getInstance(this, "e43755ee573638205f4ad2501fcead66");
+        mixpanelAPI.getPeople().set("open date", new Date());
+        mixpanelAPI.identify(mixpanelAPI.getDistinctId());
+        mixpanelAPI.track("onResume_Register");
+        mixpanelAPI.flush();
+       // mixpanelAPI.people.set("open date", new Date());
+
     }
 
     private void initializedVariables() {

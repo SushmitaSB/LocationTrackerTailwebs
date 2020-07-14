@@ -48,7 +48,9 @@ public class Validation {
 
                 if (email.matches(emailPattern))
                 {
-                    if (pass.equals(cpass)){
+                    if (pass.equals(cpass) ){
+                        if (pass.length() >= 6){
+
 
                         firebaseAuth.createUserWithEmailAndPassword(email, pass)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -81,11 +83,14 @@ public class Validation {
                                         }else {
                                             Log.d(TAG, "onFilure  " +
                                                     task.getException());
-                                            Toast.makeText(context, "error ! "+ task.getException(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Email is already exist! " , Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
                                 });
+                    }else {
+                            Toast.makeText(context, "Password length should be atleast 6", Toast.LENGTH_SHORT).show();
+                        }
                     }else {
                         Toast.makeText(context,"Password is not matching", Toast.LENGTH_SHORT).show();
                     }
@@ -170,7 +175,7 @@ public void setLoginValidation( final String email, String pass,final FirebaseAu
                         context.startActivity(intent);
                         ((Activity)context).finish();
                     }else {
-                        Toast.makeText(context, "Error ! "+ task.getException(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error ! "+ "Please enter valid email and password", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

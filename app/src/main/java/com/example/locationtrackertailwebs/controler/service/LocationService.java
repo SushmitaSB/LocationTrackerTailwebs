@@ -48,6 +48,7 @@ public class LocationService extends Service {
     FirebaseFirestore firestore;
     ArrayList<Double> latlistEvent = new ArrayList<>();
     ArrayList<Double> longlistEvent = new ArrayList<>();
+    public static String track_time;
 
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
@@ -127,7 +128,13 @@ public class LocationService extends Service {
             firestore = FirebaseFirestore.getInstance();
             CollectionReference dbReference = firestore.collection("trackdetails");
             long id = new java.util.Date().getTime();
-            TrackDetails trackDetails = new TrackDetails(id, TrackingPage.total_time_track, latitudeList, longitudeList, new Date(),userEmail);
+            TrackDetails trackDetails = new TrackDetails();
+            if (TrackingPage.total_time_track != null){
+                 trackDetails = new TrackDetails(id, TrackingPage.total_time_track, latitudeList, longitudeList, new Date(),userEmail);
+            }else {
+                 trackDetails = new TrackDetails(id, track_time, latitudeList, longitudeList, new Date(),userEmail);
+            }
+
             dbReference.add(trackDetails)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
